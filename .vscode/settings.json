@@ -1,0 +1,19 @@
+{
+    "cSpell.words": [
+        "adminsdk",
+        "Dont",
+        "firestore",
+        "Firestore",
+        "Gandham",
+        "hookform",
+        "pkce",
+        "Signin"
+    ],
+    "docwriter.style": "JSDoc",
+    "colorInfo.fields": [
+        "alpha",    
+        "hex",
+        "hsl",
+        "rgb",
+    ]
+}
