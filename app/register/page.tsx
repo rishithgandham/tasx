@@ -20,47 +20,7 @@ import {
 export default async function RegisterPage() {
   const session = await auth();
 
-  async function signUpWithCredentials(formData: FormData) {
-    'use server';
-
-    // server side check data is valid
-    const data = Object.fromEntries(formData);
-    const parsed = registrationSchema.safeParse(data);
-
-    if (!parsed.success) return console.log('invalid data');
-
-    // see if user exist in firestore, if user exist return error
-    const query = await firestoreAdmin
-      .collection('users')
-      .where('email', '==', data.email.toString())
-      .get();
-    if (query.size > 0) return console.log('user already exist: ', query);
-
-    // hash password
-    const hashed = await hashPassword(data.password.toString());
-
-    // create user account in firestore.
-    try {
-      const userRef = await firestoreAdmin.collection('users').add({
-        email: data.email.toString(),
-        password: hashed,
-        name: `${data.firstName.toString()} ${data.lastName.toString()}`,
-        image: null,
-        emailVerified: null,
-        // add extra fields here
-      });
-    } catch (error) {
-      console.log('error creating user: ', error);
-    }
-
-    // sign in user
-    // signIn('credentials', new FormData(
-    //   JSON.stringify({
-    //     username: data.email,
-    //     password: data.password,
-    //   }),
-    // ));
-  }
+  
 
   return session?.user ? (
     redirect('/app')

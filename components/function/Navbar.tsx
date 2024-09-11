@@ -38,7 +38,7 @@ import { logOut } from '@/actions/auth';
 import { UserProfile } from './UserDropdown';
 
 const navLinks: NavLink[] = [
-  { name: 'Classes', href: '/app/lists', icon: <Book size={18} /> },
+  { name: 'Classes', href: '/app/classes', icon: <Book size={18} /> },
   {
     name: 'Dashboard',
     href: '/app',
@@ -61,50 +61,48 @@ export default async function Navbar() {
 
   return session?.user ? (
     // <nav className="fixed inset-x-0 top-0  w-screen">
-    //   <div className="container w-full">
-    <NavigationMenu className="border-b-[1px] flex justify-between  fixed top-0 w-full border-border h-12 2xl:px-40 xl:px-24 lg:px-16 md:px-8 px-5 backdrop-blur">
+    <NavigationMenu className="border-b-[1px]   fixed top-0 w-screen border-border h-12  backdrop-blur">
       {/* <div className="flex h-16 items-center px-4"> */}
-
-      <NavigationMenuList className="hidden md:flex w-full">
-        {' '}
-        <NavigationMenuItem>
+      <div className="container flex justify-between">
+        <ul className="md:flex hidden justify-center items-center space-x-3 ">
+          {' '}
           <Link href="" legacyBehavior passHref>
             <NavigationMenuLink className="text-xl font-bold tracking-tight">
               tasx
             </NavigationMenuLink>
           </Link>
-        </NavigationMenuItem>
-        {navLinks.map((link, i) => (
-          <Link href={link.href} key={i} legacyBehavior passHref>
-            <NavigationMenuLink className="text-xs text-muted-foreground hover:text-foreground">
-              {link.name}
-            </NavigationMenuLink>
-          </Link>
-        ))}
-      </NavigationMenuList>
+          {navLinks.map((link, i) => (
+            <Link href={link.href} key={i} legacyBehavior passHref>
+              <NavigationMenuLink className="text-xs mt-1 text-muted-foreground hover:text-foreground">
+                {link.name}
+              </NavigationMenuLink>
+            </Link>
+          ))}
+        </ul>
 
-      <div className="ml-auto flex md:max-w-max w-full justify-normal  items-center space-x-2">
-        <Sidebar user={session.user} />
-        <form className="w-full">
-          <Input
-            type="search"
-            placeholder="Search..."
-            className=" w-full bg-card md:w-[200px] lg:w-[300px] h-8"
-          />
-        </form>
+        <div className=" flex md:max-w-min w-full justify-normal  items-center space-x-2">
+          <Sidebar user={session.user} />
+          <form className="w-full">
+            <Input
+              type="search"
+              placeholder="Search..."
+              className=" w-full bg-card md:w-[200px] lg:w-[300px] h-8"
+            />
+          </form>
 
-        <UserProfile user={session?.user} />
-        <div className="hidden md:flex justify-between space-x-0">
-          <Button variant="ghost" size="sm" className="hidden md:flex ">
-            <Bell className="h-3 w-3" />
-            <span className="sr-only">Notifications</span>
-          </Button>
-          <Button variant="ghost" size="sm" className="hidden md:flex">
-            <FaGithub className="h-3 w-3" />
-            <span className="sr-only">Github</span>
-          </Button>
+          <UserProfile user={session?.user} />
+          <div className="hidden md:flex justify-between space-x-0">
+            <Button variant="ghost" size="sm" className="hidden md:flex ">
+              <Bell className="h-3 w-3" />
+              <span className="sr-only">Notifications</span>
+            </Button>
+            <Button variant="ghost" size="sm" className="hidden md:flex">
+              <FaGithub className="h-3 w-3" />
+              <span className="sr-only">Github</span>
+            </Button>
 
-          <ModeToggle />
+            <ModeToggle />
+          </div>
         </div>
       </div>
       {/* </div> */}
