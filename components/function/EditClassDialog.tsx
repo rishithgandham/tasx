@@ -1,6 +1,5 @@
-'use client';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { PlusIcon, RotateCw } from 'lucide-react';
+import { ClassType } from '@/schema/classSchemas';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -26,48 +25,61 @@ import {
 import { useForm } from 'react-hook-form';
 import { FormClass, formClassResolver } from '@/schema/classSchemas';
 import { useState } from 'react';
-import { addClass } from '@/actions/classes';
+import { editClass } from '@/actions/classes';
+import { ToastAction } from '../ui/toast';
 import { useToast } from '../hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
-
-export function AddClassDialog({ children }: { children: React.ReactNode }) {
+import { RotateCw } from 'lucide-react';
+export default function EditClassDialog({
+  c,
+  open,
+  setOpen,
+}: {
+  c: ClassType;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const form = useForm<FormClass>({
     resolver: formClassResolver,
+    defaultValues: {
+      name: c.name,
+      description: c.description,
+      teacher: c.teacher,
+    },
   });
-
   const { toast } = useToast();
-  const [open, setOpen] = useState(false);
 
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add a Class</DialogTitle>
+            <DialogTitle>Edit {c.name}</DialogTitle>
             <DialogDescription>
-              Enter the following information to add a class.
+              Enter the following information to edit{' '}
+              <span className="text-primary font-bold">{c.name}</span>
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async data => {
-                const { error, message } = await addClass(data as FormClass);
+                const { error, message } = await editClass(
+                  data as FormClass,
+                  c.id
+                );
                 if (error) {
                   toast({
-                    title: 'Error adding class',
+                    title: 'Error editing class',
                     description: error,
                     variant: 'destructive',
                   });
-                } // TODO: toast error
-
-                if (error) {
+                } 
+                if (message) {
                   toast({
-                    title: 'Class Added',
+                    title: 'Class Edited',
                     description: message,
                     variant: 'default',
                   });
-                } // TODO: toast success
+                } 
                 setOpen(false);
               })}
             >
@@ -114,7 +126,7 @@ export function AddClassDialog({ children }: { children: React.ReactNode }) {
                 )}
               />
               <Button type="submit" className="mt-5">
-                Add Class
+                Edit Class
               </Button>
             </form>
           </Form>

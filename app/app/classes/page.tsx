@@ -9,11 +9,11 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const session = await auth();
-  const { classes, error } = await getClasses();
-  console.log(classes);
-
+  let { data, error } = await getClasses();
   return session?.user ? (
     <>
       <section className=" h-full w-full  justify-center ">
@@ -22,9 +22,22 @@ export default async function Page() {
             Your classes...
           </p>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10">
-            {classes?.map(c => (
+            {data?.map(c => (
               <ClassButton key={c.id} c={c} />
             ))}
+            {data?.length === 0 && (
+              <Card className="p-5  h-full">
+                <CardContent className="p-0 flex-col flex justify-center items-center h-full">
+                  <CardTitle className="text-muted-foreground text-md">
+                    No classes found
+                  </CardTitle>
+                  <p className="text-muted-foreground text-sm text-center">
+                    You have not added any classes yet. Click Add Class to get started
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
             <AddClassDialog>
               <Card className="p-5 hover:bg-muted h-full">
                 <CardContent className="p-0 flex-col flex justify-center items-center h-full">
