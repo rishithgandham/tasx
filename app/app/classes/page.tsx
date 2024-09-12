@@ -19,7 +19,7 @@ export default async function Page() {
       <section className=" h-full w-full  justify-center ">
         <div className="container py-24 flex flex-col mx-auto">
           <p className="text-2xl  md:text-4xl tracking-tighter font-bold">
-            Your classes...
+            Your classes 📑 ...
           </p>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 mt-10">
             {data?.map(c => (

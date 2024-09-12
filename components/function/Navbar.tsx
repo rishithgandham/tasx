@@ -61,7 +61,7 @@ export default async function Navbar() {
 
   return session?.user ? (
     // <nav className="fixed inset-x-0 top-0  w-screen">
-    <NavigationMenu className="border-b-[1px]   fixed top-0 w-screen border-border h-12  backdrop-blur">
+    <NavigationMenu className="border-b-[1px]   fixed top-0 z-20 w-screen border-border h-12  backdrop-blur">
       {/* <div className="flex h-16 items-center px-4"> */}
       <div className="container flex justify-between">
         <ul className="md:flex hidden justify-center items-center space-x-3 ">
@@ -76,7 +76,7 @@ export default async function Navbar() {
               <NavigationMenuLink className="text-xs mt-1 text-muted-foreground hover:text-foreground">
                 {link.name}
               </NavigationMenuLink>
-            </Link>
+            </Link> 
           ))}
         </ul>
 

@@ -174,10 +174,10 @@ export default async function Dashboard() {
     <>
       <section className=" h-full w-full  justify-center ">
         <div className="container py-20 flex flex-col mx-auto">
-          <p className="text-2xl md:text-3xl tracking-tight font-bold">
-            Welcome, {session.user.name}
+          <p className="text-3xl md:text-3xl tracking-tighter font-bold">
+            Dashboard 🖥️ ...
           </p>
-          <p className="md:text-sm text-xs">
+          <p className="text-muted-foreground text-xs">
             You currently have 12 tasks, 3 quizzes upcoming{' '}
           </p>
 

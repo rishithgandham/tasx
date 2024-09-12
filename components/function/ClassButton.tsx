@@ -25,10 +25,10 @@ export default function ClassButton({ c }: { c: ClassType }) {
           <div className="flex justify-between items-center mb-2">
             <Link
               href={`/classes/${c.id}`}
-              className="text-lg flex gap-2 font-bold hover:text-muted-foreground hover:underline "
+              className="text-lg flex items-center gap-2 font-bold hover:text-muted-foreground hover:underline "
             >
               {c.name}
-              <Badge variant={'secondary'}>10</Badge>
+              <Badge variant={'secondary'} className='h-7'>10</Badge>
             </Link>
             <ClassDropdown c={c} />
           </div>

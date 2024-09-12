@@ -6,11 +6,12 @@ import { auth, signIn } from '@/server/auth';
 import LoginForm from '@/components/function/LoginForm';
 import { Card } from '@/components/ui/card';
 import { loginSchema } from '@/app/login/loginSchema';
+import { redirect } from 'next/navigation';
 
 export default async function LoginPage() {
   const session = await auth();
 
-  return (
+  return session?.user ? redirect('/app') : (
     <>
       <section className="h-full w-full bg-gradient-to-br bg-background">
         <div className="flex h-full items-center justify-center p-5">
