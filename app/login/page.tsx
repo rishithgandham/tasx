@@ -13,7 +13,7 @@ export default async function LoginPage() {
 
   return session?.user ? redirect('/app') : (
     <>
-      <section className="h-full w-full bg-gradient-to-br bg-background">
+      <section className="h-full w-full ">
         <div className="flex h-full items-center justify-center p-5">
           <Card className="p-10 w-[40rem]">
             <LoginForm />

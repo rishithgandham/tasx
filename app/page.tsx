@@ -4,6 +4,7 @@ import classes_screenshot from './(images)/tasx_classes_screenshot.png';
 import { redirect } from 'next/navigation';
 import { Card, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 type Feature = {
   title: string;
@@ -70,7 +71,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen ">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+        <section className="w-full py-24 md:py-32 lg:py-48 xl:py-60">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center ">
               <div className="flex flex-col justify-center space-y-4 max-w-3xl">
@@ -83,7 +84,7 @@ export default async function Home() {
                     exams with ease. Never miss a deadline again!
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex  gap-3">
                   <form
                     action={async () => {
                       'use server';
@@ -169,7 +170,7 @@ export default async function Home() {
             </div>
             {/* end landing */}
             <div className="mt-56 grid md:grid-cols-2 grid-cols-1">
-              <div className='flex-col justify-center flex '>
+              <div className="flex-col justify-center flex ">
                 <p className="text-5xl font-bold tracking-tighter">tasx:</p>
                 <p className="text-3xl tracking-tighter font-bold mt-2 text-muted-foreground">
                   A task manager that you can{' '}
@@ -181,35 +182,26 @@ export default async function Home() {
                   data is safe and secure.
                 </p>
                 <div className="flex gap-3">
-                  <form
-                    action={async () => {
-                      'use server';
-                      redirect('/register');
-                    }}
-                  >
-                    <Button type="submit" className="mt-4">
-                      Get Started
+                  
+                  <Link href="/register" passHref>
+                    <Button type="submit" variant="default" className="mt-4">
+                      Get started
                     </Button>
-                  </form>
-                  <form
-                    action={async () => {
-                      'use server';
-                      redirect('/contact');
-                    }}
-                  >
+                  </Link>
+                  <Link href="/contact" passHref>
                     <Button type="submit" variant="link" className="mt-4">
                       Contact us
                     </Button>
-                  </form>
+                  </Link>
                 </div>
               </div>
-                <div className="relative w-full aspect-[16/9] rounded-xl">
-                  <Image
-                    src={classes_screenshot}
-                    alt="tasx app demo"
-                    className=" border-border -z-50 shadow-2xl  border-4 rounded-[var(--radius)]"
-                  />
-                </div>
+              <div className="relative w-full aspect-[16/9] py-10 md:py-0 rounded-xl">
+                <Image
+                  src={classes_screenshot}
+                  alt="tasx app demo"
+                  className=" border-border -z-50 shadow-2xl  border-4 rounded-[var(--radius)]"
+                />
+              </div>
             </div>
           </div>
         </section>

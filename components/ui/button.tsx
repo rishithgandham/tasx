@@ -21,6 +21,8 @@ const buttonVariants = cva(
         dropdown: 'text-primary',
       },
       size: {
+
+        navbar: 'h-8 px-4',
         default: "h-10 px-4 py-2",
         sm: "h-7 w-7 rounded-md px-2 ",
         lg: "h-11 rounded-md px-8",

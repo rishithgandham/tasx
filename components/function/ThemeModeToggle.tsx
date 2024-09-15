@@ -18,7 +18,7 @@ export function ModeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="" >
+        <Button variant="ghost" size="sm" className="">
           <SunIcon className=" h-3 w-3 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className=" h-3 w-3 absolute  rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Notifications</span>
@@ -31,6 +31,12 @@ export function ModeToggle() {
         <DropdownMenuItem onClick={() => setTheme('dark')}>
           Dark
         </DropdownMenuItem>
+        {/* <DropdownMenuItem onClick={() => setTheme('violet')}>
+          Violet
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme('rose')}>
+          Rose
+        </DropdownMenuItem>*/}
         <DropdownMenuItem onClick={() => setTheme('system')}>
           System
         </DropdownMenuItem>

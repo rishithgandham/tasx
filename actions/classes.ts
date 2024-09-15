@@ -59,6 +59,45 @@ export async function getClasses(): Promise<{
   }
 }
 
+export async function getClass(classId: string): Promise<{
+  error?: string;
+  data?: ClassType;
+}> {
+  const session = await auth();
+  if (!session?.user)
+    return {
+      error: 'User not authenticated to view this class.',
+    };
+
+  try {
+    const ref = await firestoreAdmin
+      .collection('users')
+      .doc(session.user.id as string)
+      .collection('classes')
+      .doc(classId);
+
+    const doc = await ref.get();
+    if (!doc.data()) {
+      return {
+        error: `Class with ID ${classId} does not exist`,
+      };
+    }
+
+    const data = {
+      id: doc.id,
+      ...doc.data(),
+    };
+
+    return {
+      data: data as ClassType,
+    };
+  } catch (e) {
+    return {
+      error: `Error getting class with ID ${classId}`,
+    };
+  }
+}
+
 export async function deleteClass(
   classId: string,
   name: string

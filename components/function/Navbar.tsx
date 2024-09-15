@@ -66,8 +66,8 @@ export default async function Navbar() {
       <div className="container flex justify-between">
         <ul className="md:flex hidden justify-center items-center space-x-3 ">
           {' '}
-          <Link href="" legacyBehavior passHref>
-            <NavigationMenuLink className="text-xl font-bold tracking-tight">
+          <Link href="/app" legacyBehavior passHref>
+            <NavigationMenuLink className="text-xl text-primary font-bold tracking-tight">
               tasx
             </NavigationMenuLink>
           </Link>
@@ -76,7 +76,7 @@ export default async function Navbar() {
               <NavigationMenuLink className="text-xs mt-1 text-muted-foreground hover:text-foreground">
                 {link.name}
               </NavigationMenuLink>
-            </Link> 
+            </Link>
           ))}
         </ul>
 
@@ -110,7 +110,38 @@ export default async function Navbar() {
   ) : (
     //   </div>
     // </nav>
-    <></>
+    <>
+      <NavigationMenu className="border-b-[1px]   fixed top-0 z-20 w-screen border-border h-12  backdrop-blur">
+        {/* <div className="flex h-16 items-center px-4"> */}
+        <div className="container grid grid-cols-2 justify-between">
+          {' '}
+          <div className="flex h-full items-center">
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink className="text-xl text-primary font-bold tracking-tighter">
+                tasx
+              </NavigationMenuLink>
+            </Link>
+          </div>
+          <div className="flex justify-end items-center text-xs gap-2">
+            <Link href="/login" passHref>
+              <Button variant="link" className="text-bold text-xs">
+                Log in
+              </Button>
+            </Link>
+            <Link href="/register" passHref>
+              <Button
+                variant={'default'}
+                size={'navbar'}
+                className="font-semibold  text-xs"
+              >
+                Get started
+              </Button>
+            </Link>
+            <ModeToggle />
+          </div>
+        </div>
+      </NavigationMenu>
+    </>
   );
 }
 

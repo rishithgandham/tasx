@@ -25,13 +25,13 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          'w-screen h-screen  bg-background text-foreground'
+          'w-screen h-screen bg-background  text-foreground'
         )}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          
           disableTransitionOnChange
         >
           {/* navbar */}
