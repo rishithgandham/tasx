@@ -45,7 +45,46 @@ export async function getTasks(classId: string): Promise<{
   }
 }
 
-export async function addTask(task: TaskForm, classId: string) {
+export async function setTaskComplete(
+  classId: string,
+  taskId: string,
+  completed: boolean
+): Promise<{
+  error?: string;
+  message?: string;
+}> {
+  const session = await auth();
+  if (!session?.user) return { error: 'User not authenticated' };
+
+  if (!classId) return { error: 'Class ID not provided' };
+  if (!taskId) return { error: 'Task ID not provided' };
+
+  try {
+    await firestoreAdmin
+      .collection('users')
+      .doc(session.user.id as string)
+      .collection('classes')
+      .doc(classId)
+      .collection('tasks')
+      .doc(taskId)
+      .update({
+        completed,
+      });
+    revalidatePath(`/app/classes/${classId}`);
+    return { message: 'Task updated successfully' };
+  } catch (e) {
+    return { error: 'Error updating task' };
+  }
+}
+
+export async function editTask(
+  task: TaskForm,
+  classId: string,
+  taskId: string
+): Promise<{
+  error?: string;
+  message?: string;
+}> {
   const session = await auth();
   if (!session?.user) return { error: 'User not authenticated' };
 
@@ -53,9 +92,46 @@ export async function addTask(task: TaskForm, classId: string) {
   if (!parsed.success) return { error: parsed.error.message };
 
   if (!classId) return { error: 'Class ID not provided' };
+  if (!taskId) return { error: 'Task ID not provided' };
 
-  const { name, description, dueDate } = task;
-  const fireStoreDueDate = Timestamp.fromDate(dueDate);
+  const fireStoreDueDate = Timestamp.fromDate(parsed.data.dueDate);
+
+  try {
+    await firestoreAdmin
+      .collection('users')
+      .doc(session.user.id as string)
+      .collection('classes')
+      .doc(classId)
+      .collection('tasks')
+      .doc(taskId)
+      .update({
+        name: parsed.data.name,
+        description: parsed.data.description,
+        dueDate: fireStoreDueDate,
+      });
+    revalidatePath(`/app/classes/${classId}`);
+    return { message: 'Task edited successfully' };
+  } catch (e) {
+    return { error: 'Error editing task' };
+  }
+}
+
+export async function addTask(
+  task: TaskForm,
+  classId: string
+): Promise<{
+  message?: string;
+  error?: string;
+}> {
+  const session = await auth();
+  if (!session?.user) return { error: 'User not authenticated' };
+
+  const parsed = await taskFormSchema.safeParse(task);
+  if (!parsed.success) return { error: parsed.error.message };
+
+  if (!classId) return { error: 'Class ID not provided' };
+
+  const fireStoreDueDate = Timestamp.fromDate(parsed.data.dueDate);
 
   try {
     await firestoreAdmin
@@ -65,8 +141,8 @@ export async function addTask(task: TaskForm, classId: string) {
       .doc(classId)
       .collection('tasks')
       .add({
-        name,
-        description,
+        name: parsed.data.name,
+        description: parsed.data.description,
         dueDate: fireStoreDueDate,
         completed: false,
       });
@@ -74,5 +150,34 @@ export async function addTask(task: TaskForm, classId: string) {
     return { message: 'Task added successfully' };
   } catch (e) {
     return { error: 'Error adding task' };
+  }
+}
+
+export async function deleteTask(
+  taskId: string,
+  classId: string
+): Promise<{
+  error?: string;
+  message?: string;
+}> {
+  const session = await auth();
+  if (!session?.user) return { error: 'User not authenticated' };
+
+  if (!classId) return { error: 'Class ID not provided' };
+  if (!taskId) return { error: 'Task ID not provided' };
+
+  try {
+    await firestoreAdmin
+      .collection('users')
+      .doc(session.user.id as string)
+      .collection('classes')
+      .doc(classId)
+      .collection('tasks')
+      .doc(taskId)
+      .delete();
+    revalidatePath(`/app/classes/${classId}`);
+    return { message: 'Task deleted successfully' };
+  } catch (e) {
+    return { error: 'Error deleting task' };
   }
 }

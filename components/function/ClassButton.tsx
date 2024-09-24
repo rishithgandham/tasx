@@ -63,10 +63,7 @@ function ClassDropdown({ c }: { c: ClassType }) {
             Edit
             <Edit size={15} />
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary">
-            Pin
-            <Pin size={15} />
-          </DropdownMenuItem>
+          
           <DropdownMenuItem
             onClick={() => setDeleteDialogOpen(true)}
             className="flex items-center w-full hover:cursor-pointer  justify-between text-destructive font-semibold hover:text-primary"

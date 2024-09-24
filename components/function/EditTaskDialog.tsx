@@ -1,19 +1,12 @@
-'use client';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, PlusIcon, RotateCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from 'react';
+
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
+  DialogDescription,
   DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '../ui/dialog';
 import {
   Form,
   FormControl,
@@ -22,79 +15,84 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '../ui/form';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
-import { FormClass, formClassResolver } from '@/schema/classSchemas';
-import { useState } from 'react';
-import { addClass } from '@/actions/classes';
-import { useToast } from '../hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
+import { Input } from '../ui/input';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../ui/button';
+import { Calendar } from '../ui/calendar';
+import { CalendarIcon } from 'lucide-react';
 import {
   TaskForm,
   taskFormResolver,
-  taskFormSchema,
+  taskTypeResolver,
+  type TaskType,
 } from '@/schema/taskSchemas';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
-import { Calendar } from '../ui/calendar';
-import { addTask } from '@/actions/tasks';
 
-export function AddTaskDialog({
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { editTask } from '@/actions/tasks';
+import { useToast } from '../hooks/use-toast';
+
+export default function EditTaskDialog({
+  t,
   classId,
+  taskId,
   open,
   setOpen,
 }: {
+  t: TaskType;
   classId: string;
+  taskId: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const form = useForm<TaskForm>({
     resolver: taskFormResolver,
     defaultValues: {
-      name: '',
-      description: '',
-      dueDate: new Date(),
-    }
+      name: t.name,
+      description: t.description,
+      dueDate: t.dueDate,
+    },
   });
-
   const { toast } = useToast();
-
   return (
     <>
       <Dialog open={open} onOpenChange={() => {
         setOpen(false);
-        form.reset();
+        form.reset(); 
       }}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="">
           <DialogHeader>
-            <DialogTitle>Add a Task</DialogTitle>
+            <DialogTitle>Edit Task: {t.name}</DialogTitle>
             <DialogDescription>
-              Enter the following information to add a task.
+              Enter the following information to edit this task.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(async data => {
                 
-                const { message, error } = await addTask(data, classId);
-                if (message) {
-                  toast({
-                    title: 'Task Added',
-                    description: message,
-                    variant: 'default',
-                  });
-                  form.reset();
-                }
+                const { message, error } = await editTask(
+                  data,
+                  classId,
+                  taskId
+                );
+
                 if (error) {
                   toast({
                     title: 'Error',
-                    description: error,
-                    variant: 'destructive',
+                    description: message,
+                    variant: 'destructive'
                   });
+                } else {
+                  toast({
+                    title: 'Task Edited',
+                    description: message,
+                    variant: 'default',
+                  });
+                  setOpen(false);
                 }
-                setOpen(false);
-
               })}
             >
               <FormField
@@ -129,7 +127,7 @@ export function AddTaskDialog({
                 render={({ field }) => <DatePicker field={field} />}
               />
               <Button type="submit" className="mt-5">
-                Add Task
+                Edit Task
               </Button>
             </form>
           </Form>

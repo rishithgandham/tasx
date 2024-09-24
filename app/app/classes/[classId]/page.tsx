@@ -31,11 +31,10 @@ export default async function ClassId({
         <div className="container py-24 flex flex-col mx-auto">
           <ClassTitle c={data} />
           <hr className="border-border my-5" />
-          <p className="text-2xl font-bold ">Your Tasks</p>
+          <p className="text-2xl font-bold my-5 text-center">Your Tasks</p>
           <ClassTable c={data} tasks={tasks?.data} />
+          <hr className="border-border my-5" />
         </div>
-
-
       </section>
     </>
   );

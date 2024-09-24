@@ -8,6 +8,7 @@ export const taskSchema = z.object({
   dueDate: z.date(),
   completed: z.boolean(),
 });
+export const taskTypeResolver = zodResolver(taskSchema);
 
 export type TaskType = z.infer<typeof taskSchema>;
 

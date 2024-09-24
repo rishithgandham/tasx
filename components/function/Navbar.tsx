@@ -187,7 +187,7 @@ function Sidebar({ user }: { user: User }) {
           {navLinks.map((link, i) => (
             <Link
               href={link.href}
-              key={i}
+              key={link.href}
               passHref
               className="w-full px-3 py-2 flex justify-between rounded-sm hover:bg-muted text-muted-foreground hover:text-foreground"
             >
@@ -213,10 +213,9 @@ function Sidebar({ user }: { user: User }) {
           </div>
           {userLinks.map((link, i) => {
             return link.action ? (
-              <form action={link.action}>
+              <form action={link.action} key={link.href}>
                 <button
                   type="submit"
-                  key={i}
                   className={`w-full px-3 py-2 flex justify-between rounded-sm hover:bg-muted ${
                     link.color == 'destructive'
                       ? 'text-destructive hover:font-bold'
@@ -230,7 +229,7 @@ function Sidebar({ user }: { user: User }) {
             ) : (
               <Link
                 href={link.href}
-                key={i}
+                key={link.href}
                 passHref
                 className={`w-full px-3 py-2 flex justify-between rounded-sm hover:bg-muted ${
                   link.color == 'destructive'
