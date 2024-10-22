@@ -37,11 +37,11 @@ export async function getTasks(classId: string): Promise<{
 
       return parsed;
     });
-
     console.log(tasksData);
     return { data: tasksData };
   } catch (e) {
-    return { error: 'Error getting tasks', data: [] };
+    console.log(e)
+    return { error: `Error getting tasks`, data: []};
   }
 }
 
@@ -118,7 +118,8 @@ export async function editTask(
 
 export async function addTask(
   task: TaskForm,
-  classId: string
+  classId: string,
+  className: string
 ): Promise<{
   message?: string;
   error?: string;
@@ -145,6 +146,9 @@ export async function addTask(
         description: parsed.data.description,
         dueDate: fireStoreDueDate,
         completed: false,
+        user_id: session.user.id,
+        class_id: classId,
+        class_name: className,
       });
     revalidatePath(`/app/classes/${classId}`);
     return { message: 'Task added successfully' };
@@ -179,5 +183,36 @@ export async function deleteTask(
     return { message: 'Task deleted successfully' };
   } catch (e) {
     return { error: 'Error deleting task' };
+  }
+}
+
+export async function getTasksFlat(): Promise<{
+  error?: string;
+  data: TaskType[];
+}> {
+  const session = await auth();
+  if (!session?.user) return { error: 'User not authenticated', data: [] };
+
+  try {
+    const ref = await firestoreAdmin
+      .collectionGroup('tasks')
+      .where('user_id', '==', session.user.id)
+      .get();
+
+    const tasksData = ref.docs.map(doc => {
+      const data = doc.data();
+      data.dueDate = data.dueDate.toDate();
+      const parsed = taskSchema.parse({
+        id: doc.id,
+        ...data,
+      }) as TaskType;
+
+
+      return parsed;
+    });
+
+    return { data: tasksData };
+  } catch (e) {
+    return { error: `Error getting Tasks ${e}`, data: [] };
   }
 }

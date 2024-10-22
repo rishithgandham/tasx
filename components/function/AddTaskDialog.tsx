@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/form';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { FormClass, formClassResolver } from '@/schema/classSchemas';
-import { useState } from 'react';
+import {  useState } from 'react';
 import { addClass } from '@/actions/classes';
 import { useToast } from '../hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
@@ -39,13 +39,14 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar } from '../ui/calendar';
 import { addTask } from '@/actions/tasks';
+import { ClassType } from '@/schema/classSchemas';
 
 export function AddTaskDialog({
-  classId,
+  c,
   open,
   setOpen,
 }: {
-  classId: string;
+  c: ClassType;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -77,7 +78,7 @@ export function AddTaskDialog({
             <form
               onSubmit={form.handleSubmit(async data => {
                 
-                const { message, error } = await addTask(data, classId);
+                const { message, error } = await addTask(data, c.id, c.name);
                 if (message) {
                   toast({
                     title: 'Task Added',

@@ -19,11 +19,12 @@ export default async function ClassId({
 }) {
   const { data, error } = await getClass(params.classId);
 
-  const tasks = await getTasks(params.classId); // temporary solution -> move tasks fetching to client component ClassTable
 
-  return !data ? (
+  const tasks = await getTasks(params.classId); // temporary solution -> move tasks fetching to client component ClassTable
+  console.log(tasks) 
+  return (error || tasks.error) ? ( // shoudnt be !data, refactor to !error
     <>
-      <p className="mt-96">{error}</p>
+      <p className="mt-96 text-center">{`${error ? error : tasks.error}`}</p>
     </>
   ) : (
     <>

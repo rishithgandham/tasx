@@ -14,7 +14,9 @@ export const dynamic = 'force-dynamic';
 export default async function Page() {
   const session = await auth();
   let { data, error } = await getClasses();
-  return session?.user ? (
+
+  if (!session?.user) redirect('/login');
+  return !error ? (
     <>
       <section className=" h-full w-full  justify-center ">
         <div className="container py-24 flex flex-col mx-auto">
@@ -32,7 +34,8 @@ export default async function Page() {
                     No classes found
                   </CardTitle>
                   <p className="text-muted-foreground text-sm text-center">
-                    You have not added any classes yet. Click Add Class to get started
+                    You have not added any classes yet. Click Add Class to get
+                    started
                   </p>
                 </CardContent>
               </Card>
@@ -51,6 +54,6 @@ export default async function Page() {
       </section>
     </>
   ) : (
-    redirect('/login')
+    <p className="mt-96 text-center">{error}</p>
   );
 }

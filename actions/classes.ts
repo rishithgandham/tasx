@@ -10,6 +10,29 @@ import { revalidatePath } from 'next/cache';
 //   return (await auth())?.user ? true : false;
 // }
 
+export async function getTaskCount(classId: string): Promise<{
+  error?: string;
+  data: number;
+}> {
+  const session = await auth();
+  if (!session?.user) return { error: 'User not authenticated', data: 0 };
+
+  try {
+    const ref = await firestoreAdmin
+      .collection('users')
+      .doc(session.user.id as string)
+      .collection('classes')
+      .doc(classId)
+      .collection('tasks')
+      .count()
+      .get();
+
+    return { data: ref.data().count };
+  } catch (e) {
+    return { error: 'Error getting task count', data: 0 };
+  }
+}
+
 export async function addClass(c: FormClass): Promise<{
   error?: string;
   message?: string;
@@ -26,7 +49,10 @@ export async function addClass(c: FormClass): Promise<{
       .doc(session.user.id as string)
       .collection('classes');
 
-    await ref.add(parsed.data);
+    await ref.add({
+      ...parsed.data,
+      user_id: session.user.id,
+    });
   } catch (e) {
     return { error: 'Error adding class' };
   }
@@ -36,10 +62,10 @@ export async function addClass(c: FormClass): Promise<{
 
 export async function getClasses(): Promise<{
   error?: string;
-  data?: ClassType[];
+  data: ClassType[];
 }> {
   const session = await auth();
-  if (!session?.user) return { error: 'User not authenticated' };
+  if (!session?.user) return { error: 'User not authenticated', data: [] };
 
   try {
     const ref = await firestoreAdmin
@@ -55,18 +81,19 @@ export async function getClasses(): Promise<{
     });
     return { data: classesData };
   } catch (e) {
-    return { error: 'Error getting classes' };
+    return { error: 'Error getting classes', data: [] };
   }
 }
 
 export async function getClass(classId: string): Promise<{
   error?: string;
-  data?: ClassType;
+  data: ClassType;
 }> {
   const session = await auth();
   if (!session?.user)
     return {
       error: 'User not authenticated to view this class.',
+      data: {} as ClassType,
     };
 
   try {
@@ -80,6 +107,7 @@ export async function getClass(classId: string): Promise<{
     if (!doc.data()) {
       return {
         error: `Class with ID ${classId} does not exist`,
+        data: {} as ClassType,
       };
     }
 
@@ -94,6 +122,7 @@ export async function getClass(classId: string): Promise<{
   } catch (e) {
     return {
       error: `Error getting class with ID ${classId}`,
+      data: {} as ClassType,
     };
   }
 }

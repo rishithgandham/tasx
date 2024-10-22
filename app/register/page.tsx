@@ -26,7 +26,7 @@ export default async function RegisterPage() {
     redirect('/app')
   ) : (
     <>
-      <section className="h-full w-full bg-gradient-to-br bg-primary/10">
+      <section className="h-full w-full ">
         <div className="flex h-full items-center justify-center p-5">
           <Card className="p-10 w-[40rem]">
             <RegisterForm />

@@ -15,9 +15,16 @@ import {
 import { DeleteClassDialog } from './DeleteClassDialog';
 import EditClassDialog from './EditClassDialog';
 import { useToast } from '../hooks/use-toast';
+import { useQuery } from '@tanstack/react-query';
+import { getTaskCount } from '@/actions/classes';
 
 export default function ClassButton({ c }: { c: ClassType }) {
-  const { toast } = useToast();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['class-doc-count', c.id],
+    queryFn: () => getTaskCount(c.id),
+  });
+
+  
   return (
     <>
       <Card className="p-5 hover:bg-muted/10">
@@ -28,7 +35,7 @@ export default function ClassButton({ c }: { c: ClassType }) {
               className="text-lg flex items-center gap-2 font-bold hover:text-muted-foreground hover:underline "
             >
               {c.name}
-              <Badge variant={'secondary'} className='h-7'>10</Badge>
+              <Badge variant={'secondary'} className='h-7'>{data?.data}</Badge>
             </Link>
             <ClassDropdown c={c} />
           </div>

@@ -7,6 +7,9 @@ export const taskSchema = z.object({
   description: z.string(),
   dueDate: z.date(),
   completed: z.boolean(),
+  user_id: z.string(),
+  class_id: z.string(),
+  class_name: z.string(),
 });
 export const taskTypeResolver = zodResolver(taskSchema);
 

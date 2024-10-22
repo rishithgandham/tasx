@@ -34,14 +34,9 @@ import DeleteTaskDialog from './DeleteTaskDialog';
 import { HoverCard, HoverCardContent } from '../ui/hover-card';
 import { HoverCardTrigger } from '@radix-ui/react-hover-card';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
-export default function ClassTable({
-  c,
-  tasks,
-}: {
-  c: ClassType;
-  tasks: TaskType[];
-}) {
+export default function DashboardTasksTable({ tasks }: { tasks: TaskType[] }) {
   const [addTaskDialogOpen, setAddTaskDialogOpen] = useState(false);
   const [openEditTaskDialog, setOpenEditTaskDialog] = useState(false);
   const [openDeleteTaskDialog, setOpenDeleteTaskDialog] = useState(false);
@@ -86,13 +81,14 @@ export default function ClassTable({
   return (
     <>
       <Table>
-        <TableCaption>A list of your tasks.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className=" text-left">Task Name</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Date Due</TableHead>
-            <TableHead>Amount</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
+            <TableHead>Class</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -101,7 +97,7 @@ export default function ClassTable({
             // .sort((t, b) => compareAsc(t.dueDate, b.dueDate))
             .map(t => (
               <>
-                <TableRow key={t.id}>
+                <TableRow key={t.dueDate.toDateString()}>
                   <TableCell>{t.name}</TableCell>
                   <TableCell>
                     <HoverCard>
@@ -187,6 +183,9 @@ export default function ClassTable({
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
+                  <TableCell>
+                    <Link className='hover:underline' href={`/app/classes/${t.class_id}`}>{t.class_name}</Link>
+                  </TableCell>
                   <EditTaskDialog
                     t={t}
                     classId={t.class_id}
@@ -204,24 +203,7 @@ export default function ClassTable({
               </>
             ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={5} className="text-sm">
-              <button
-                className="w-full"
-                onClick={() => setAddTaskDialogOpen(true)}
-              >
-                + Add Task
-              </button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
-      <AddTaskDialog
-        c={c}
-        open={addTaskDialogOpen}
-        setOpen={setAddTaskDialogOpen}
-      />
     </>
   );
 }

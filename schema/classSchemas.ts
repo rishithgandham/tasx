@@ -22,6 +22,7 @@ export type ClassType = {
     description: string,
     teacher: string,
     id: string,
+    user_id: string,
 }
 // export const classSchema = z.object({
 //     name: z.string(),
