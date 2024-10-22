@@ -45,7 +45,7 @@ export default function ClassTable({
   const [addTaskDialogOpen, setAddTaskDialogOpen] = useState(false);
   const [openEditTaskDialog, setOpenEditTaskDialog] = useState(false);
   const [openDeleteTaskDialog, setOpenDeleteTaskDialog] = useState(false);
-
+  const [t, setT] = useState<TaskType>(tasks[0]);
   const { toast } = useToast();
 
   async function setComplete(t: TaskType) {
@@ -170,7 +170,10 @@ export default function ClassTable({
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={() => setOpenEditTaskDialog(true)}
+                          onClick={() => {
+                            setOpenEditTaskDialog(true);
+                            setT(t);
+                          }}
                           className="hover:cursor-pointer flex justify-between  text-muted-foreground hover:text-primary"
                         >
                           <Edit size={16} />
@@ -178,7 +181,10 @@ export default function ClassTable({
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onClick={() => setOpenDeleteTaskDialog(true)}
+                          onClick={() => {
+                            setOpenDeleteTaskDialog(true);
+                            setT(t);
+                          }}
                           className="hover:cursor-pointer flex gap-4 justify-between text-destructive/90 hover:text-destructive"
                         >
                           <Trash size={16} />
@@ -187,19 +193,6 @@ export default function ClassTable({
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
-                  <EditTaskDialog
-                    t={t}
-                    classId={t.class_id}
-                    taskId={t.id}
-                    open={openEditTaskDialog}
-                    setOpen={setOpenEditTaskDialog}
-                  />
-                  <DeleteTaskDialog
-                    classId={t.class_id}
-                    t={t}
-                    open={openDeleteTaskDialog}
-                    setOpen={setOpenDeleteTaskDialog}
-                  />
                 </TableRow>
               </>
             ))}
@@ -217,6 +210,19 @@ export default function ClassTable({
           </TableRow>
         </TableFooter>
       </Table>
+      <EditTaskDialog
+        t={t}
+        classId={t.class_id}
+        taskId={t.id}
+        open={openEditTaskDialog}
+        setOpen={setOpenEditTaskDialog}
+      />
+      <DeleteTaskDialog
+        classId={t.class_id}
+        t={t}
+        open={openDeleteTaskDialog}
+        setOpen={setOpenDeleteTaskDialog}
+      />
       <AddTaskDialog
         c={c}
         open={addTaskDialogOpen}

@@ -143,7 +143,7 @@ export async function deleteClass(
     .collection('classes')
     .doc(classId);
 
-  await ref.delete();
+  await firestoreAdmin.recursiveDelete(ref);
   revalidatePath('/app/classes');
   return { message: `Class ${name} deleted!` };
 }
