@@ -10,6 +10,7 @@ export async function search(searchTerm: string): Promise<{
 }> {
   const session = await auth();
   if (!session?.user) return { error: 'User not authenticated', data: [] };
+  searchTerm = searchTerm.trim().toLowerCase();
   try {
     // search tasks -------------------------------------
     const tasks = await firestoreAdmin
@@ -23,10 +24,10 @@ export async function search(searchTerm: string): Promise<{
       if (
         (data.name as string)
           .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
+          .includes(searchTerm) ||
         (data.description as string)
           .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+          .includes(searchTerm)
       ) {
         data.dueDate = data.dueDate.toDate()
         results.push({

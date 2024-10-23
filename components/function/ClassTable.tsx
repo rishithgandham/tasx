@@ -98,7 +98,7 @@ export default function ClassTable({
 
         <TableBody>
           {tasks
-            // .sort((t, b) => compareAsc(t.dueDate, b.dueDate))
+            .sort((t, b) => compareAsc(t.dueDate, b.dueDate))
             .map(t => (
               <>
                 <TableRow key={t.id}>
@@ -166,29 +166,30 @@ export default function ClassTable({
                           <Ellipsis />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
+                      <DropdownMenuContent
+                        align="end"
+                        className="p-2 border-border "
+                      >
                         <DropdownMenuItem
                           onClick={() => {
                             setOpenEditTaskDialog(true);
                             setT(t);
                           }}
-                          className="hover:cursor-pointer flex justify-between  text-muted-foreground hover:text-primary"
+                          className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary"
                         >
-                          <Edit size={16} />
                           Edit
+                          <Edit size={15} />
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
+
                         <DropdownMenuItem
                           onClick={() => {
                             setOpenDeleteTaskDialog(true);
                             setT(t);
                           }}
-                          className="hover:cursor-pointer flex gap-4 justify-between text-destructive/90 hover:text-destructive"
+                          className="flex items-center w-full hover:cursor-pointer  justify-between text-destructive font-semibold hover:text-primary"
                         >
-                          <Trash size={16} />
-                          Delete Task
+                          Delete
+                          <Trash size={15} />
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -199,7 +200,7 @@ export default function ClassTable({
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={5} className="text-sm">
+            <TableCell colSpan={5} className="text-sm p-4">
               <button
                 className="w-full"
                 onClick={() => setAddTaskDialogOpen(true)}

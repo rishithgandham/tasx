@@ -33,6 +33,11 @@ import { ToastAction } from '@radix-ui/react-toast';
 export function AddClassDialog({ children }: { children: React.ReactNode }) {
   const form = useForm<FormClass>({
     resolver: formClassResolver,
+    defaultValues: {
+      name: '',
+      description: '',
+      teacher: '',
+    },
   });
 
   const { toast } = useToast();
@@ -60,13 +65,13 @@ export function AddClassDialog({ children }: { children: React.ReactNode }) {
                     variant: 'destructive',
                   });
                 } // TODO: toast error
-
-                if (error) {
+                else {
                   toast({
                     title: 'Class Added',
                     description: message,
                     variant: 'default',
                   });
+                  form.reset();
                 } // TODO: toast success
                 setOpen(false);
               })}

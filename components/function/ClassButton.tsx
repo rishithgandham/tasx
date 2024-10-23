@@ -43,7 +43,7 @@ export default function ClassButton({ c }: { c: ClassType }) {
           <p className="text-muted-foreground text-sm">{c.description}</p>
 
           <p className="text-muted-foreground text-sm">
-            Teacher: {c.teacher} {c.id}
+            Teacher: {c.teacher} 
           </p>
         </CardContent>
       </Card>

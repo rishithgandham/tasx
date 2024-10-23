@@ -63,10 +63,7 @@ export function AddTaskDialog({
 
   return (
     <>
-      <Dialog open={open} onOpenChange={() => {
-        setOpen(false);
-        form.reset();
-      }}>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add a Task</DialogTitle>

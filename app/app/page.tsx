@@ -31,6 +31,7 @@ import { cn } from '@/lib/utils';
 import { formatDistance } from 'date-fns';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import DashboardTaskTable from '@/components/function/DashboardTaskTable';
+import { LayoutDashboard } from 'lucide-react';
 
 export default async function Dashboard() {
   // const session = await auth();
@@ -55,8 +56,8 @@ export default async function Dashboard() {
     <>
       <section className=" h-full w-full  justify-center ">
         <div className="container py-20 flex flex-col mx-auto">
-          <p className="text-3xl md:text-3xl tracking-tighter font-bold">
-            Dashboard 🖥️ ...
+          <p className="text-2xl md:text-4xl tracking-tighter font-bold">
+            Dashboard ⚒️...
           </p>
           <p className="text-muted-foreground text-xs">
             You currently have 12 tasks, 3 quizzes upcoming{' '}
@@ -126,7 +127,7 @@ export default async function Dashboard() {
 
           {/* dashboard classes table */}
           <div className="mt-10">
-            <p className="text-3xl font-bold my-5 ">Your Tasks</p>
+            {/* <p className="text-3xl font-bold my-5 ">Your Tasks</p> */}
             <DashboardTaskTable tasks={tasksFlat} />
           </div>
         </div>
