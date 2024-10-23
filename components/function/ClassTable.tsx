@@ -210,19 +210,25 @@ export default function ClassTable({
           </TableRow>
         </TableFooter>
       </Table>
-      <EditTaskDialog
-        t={t}
-        classId={t.class_id}
-        taskId={t.id}
-        open={openEditTaskDialog}
-        setOpen={setOpenEditTaskDialog}
-      />
-      <DeleteTaskDialog
-        classId={t.class_id}
-        t={t}
-        open={openDeleteTaskDialog}
-        setOpen={setOpenDeleteTaskDialog}
-      />
+      {t ? (
+        <>
+          <EditTaskDialog
+            t={t}
+            classId={t.class_id}
+            taskId={t.id}
+            open={openEditTaskDialog}
+            setOpen={setOpenEditTaskDialog}
+          />
+          <DeleteTaskDialog
+            classId={t.class_id}
+            t={t}
+            open={openDeleteTaskDialog}
+            setOpen={setOpenDeleteTaskDialog}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <AddTaskDialog
         c={c}
         open={addTaskDialogOpen}

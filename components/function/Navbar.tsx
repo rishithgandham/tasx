@@ -36,6 +36,7 @@ import { FaGithub } from 'react-icons/fa';
 import { Badge } from '../ui/badge';
 import { logOut } from '@/actions/auth';
 import { UserProfile } from './UserDropdown';
+import Search from './Search';
 
 const navLinks: NavLink[] = [
   { name: 'Classes', href: '/app/classes', icon: <Book size={18} /> },
@@ -82,13 +83,7 @@ export default async function Navbar() {
 
         <div className=" flex md:max-w-min w-full justify-normal  items-center space-x-2">
           <Sidebar user={session.user} />
-          <form className="w-full">
-            <Input
-              type="search"
-              placeholder="Search..."
-              className=" w-full bg-card md:w-[200px] lg:w-[300px] h-8"
-            />
-          </form>
+          <Search/>
 
           <UserProfile user={session?.user} />
           <div className="hidden md:flex justify-between space-x-0">
@@ -188,7 +183,7 @@ function Sidebar({ user }: { user: User }) {
             <Link
               href={link.href}
               key={link.href}
-              passHref
+              
               className="w-full px-3 py-2 flex justify-between rounded-sm hover:bg-muted text-muted-foreground hover:text-foreground"
             >
               <NavigationMenuLink className="text-sm ">

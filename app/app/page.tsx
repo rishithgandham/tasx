@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -23,38 +22,35 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import { Progress } from '@/components/ui/progress';
 import { getTasks, getTasksFlat } from '@/actions/tasks';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import { cn } from '@/lib/utils';
 import { formatDistance } from 'date-fns';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import DashboardTaskTable from '@/components/function/DashboardTaskTable';
 
 export default async function Dashboard() {
-
   // const session = await auth();
-
 
   const { data: tasksFlat, error } = await getTasksFlat();
   console.log(tasksFlat);
 
-
-
   const countCompleted = tasksFlat.filter(t => t.completed).length;
   const progress = (countCompleted / tasksFlat.length) * 100;
 
-
-  // get the class with the most incomplete tasks
   const hash = new Map<string, number>();
   tasksFlat.forEach(t => {
     if (!t.completed) {
       hash.set(t.class_name, (hash.get(t.class_name) || 0) + 1);
     }
-  })
-  const most = Array.from(hash.entries()).sort((a, b) => b[1] - a[1])[0];
-  console.log(hash)
-  
+  });
+  const entries = Array.from(hash.entries());
+  const most = entries.sort((a, b) => b[1] - a[1])[0];
+  console.log(hash);
 
-  
   return (
     <>
       <section className=" h-full w-full  justify-center ">
@@ -82,50 +78,56 @@ export default async function Dashboard() {
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>Completed tasks</CardDescription>
-                <CardTitle className="text-3xl">{countCompleted}/{tasksFlat.length}</CardTitle>
+                <CardTitle className="text-3xl">
+                  {countCompleted}/{tasksFlat.length}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
-                  You have completed {countCompleted} tasks. You have {tasksFlat.length - countCompleted} tasks remaining
+                  You have completed {countCompleted} tasks. You have{' '}
+                  {tasksFlat.length - countCompleted} tasks remaining
                 </div>
               </CardContent>
               <CardFooter>
-                <Progress value={Math.round(progress)} aria-label="75% completed" />
+                <Progress
+                  value={Math.round(progress)}
+                  aria-label="75% completed"
+                />
               </CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>Overall Progress</CardDescription>
-                <CardTitle className="text-4xl">{Math.round(progress)}%</CardTitle>
+                <CardTitle className="text-4xl">
+                  {Math.round(progress)}%
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  
-                </div>
+                <div className="text-xs text-muted-foreground"></div>
               </CardContent>
               <CardFooter>
-                <Progress value={progress}  aria-label="68% overall progress" />
+                <Progress value={progress} aria-label="68% overall progress" />
               </CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>Most Incomplete Class</CardDescription>
-                <CardTitle className="text-3xl text-destructive font-bold">{most[0]}</CardTitle>
+                <CardTitle className="text-3xl text-destructive font-bold">
+                  {entries.length > 0 ? most[0] : 'N/A'}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
-                  {most[1]} tasks incomplete
+                  {entries.length > 0 ? most[1] : 0} tasks incomplete
                 </div>
               </CardContent>
-              
             </Card>
           </div>
 
           {/* dashboard classes table */}
           <div className="mt-10">
             <p className="text-3xl font-bold my-5 ">Your Tasks</p>
-          <DashboardTaskTable tasks={tasksFlat} />
-           
+            <DashboardTaskTable tasks={tasksFlat} />
           </div>
         </div>
       </section>

@@ -168,8 +168,8 @@ export default function DashboardTasksTable({ tasks }: { tasks: TaskType[] }) {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={() => {
-                            setOpenEditTaskDialog(true);
                             setT(t);
+                            setOpenEditTaskDialog(true);
                           }}
                           className="hover:cursor-pointer flex justify-between  text-muted-foreground hover:text-primary"
                         >
@@ -179,8 +179,8 @@ export default function DashboardTasksTable({ tasks }: { tasks: TaskType[] }) {
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={() => {
-                            setOpenDeleteTaskDialog(true);
                             setT(t);
+                            setOpenDeleteTaskDialog(true);
                           }}
                           className="hover:cursor-pointer flex gap-4 justify-between text-destructive/90 hover:text-destructive"
                         >
@@ -203,19 +203,23 @@ export default function DashboardTasksTable({ tasks }: { tasks: TaskType[] }) {
             ))}
         </TableBody>
       </Table>
-      <EditTaskDialog
-        t={t}
-        classId={t.class_id}
-        taskId={t.id}
-        open={openEditTaskDialog}
-        setOpen={setOpenEditTaskDialog}
-      />
-      <DeleteTaskDialog
-        classId={t.class_id}
-        t={t}
-        open={openDeleteTaskDialog}
-        setOpen={setOpenDeleteTaskDialog}
-      />
+      {t ? (
+        <>
+          <EditTaskDialog
+            t={t}
+            classId={t.class_id}
+            taskId={t.id}
+            open={openEditTaskDialog}
+            setOpen={setOpenEditTaskDialog}
+          />
+          <DeleteTaskDialog
+            classId={t.class_id}
+            t={t}
+            open={openDeleteTaskDialog}
+            setOpen={setOpenDeleteTaskDialog}
+          />
+        </>
+      ) : <></>}
     </>
   );
 }
