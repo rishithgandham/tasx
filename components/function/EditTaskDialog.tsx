@@ -49,7 +49,7 @@ export default function EditTaskDialog({
 }) {
   const form = useForm<TaskForm>({
     resolver: taskFormResolver,
-    defaultValues: {
+    values: {
       name: t.name,
       description: t.description,
       dueDate: t.dueDate,

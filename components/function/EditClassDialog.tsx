@@ -40,7 +40,7 @@ export default function EditClassDialog({
 }) {
   const form = useForm<FormClass>({
     resolver: formClassResolver,
-    defaultValues: {
+    values: {
       name: c.name,
       description: c.description,
       teacher: c.teacher,
