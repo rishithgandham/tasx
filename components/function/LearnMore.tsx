@@ -22,7 +22,7 @@ export default function LearnMore({ variant }: { variant: "link" | "default" | "
           <div className="mt-4 space-y-4">
             <p>
               Tasx is designed with students in mind, offering an intuitive and
-              efficient way to manage your academic tasks. Whether it's
+              efficient way to manage your academic tasks. Whether it&apos;s
               assignments, projects, or exams, Tasx helps you stay organized,
               prioritize your workload, and ensure that you meet every deadline.
             </p>
@@ -60,7 +60,7 @@ export default function LearnMore({ variant }: { variant: "link" | "default" | "
               </ul>
             </div>
             <p>
-              Tasx is more than just a task manager—it's your personal academic
+              Tasx is more than just a task manager—it&apos;s your personal academic
               assistant, helping you stay focused and efficient throughout the
               school year.
             </p>

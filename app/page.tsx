@@ -98,7 +98,7 @@ export default async function Home() {
                     tasX is your all-in-one task management app designed
                     specifically for students. It simplifies managing
                     assignments, projects, and exams, helping you stay organized
-                    and never miss a deadline. With Tasx, you'll stay on top of
+                    and never miss a deadline. With Tasx, you&apos;ll stay on top of
                     your workload and handle school tasks with ease.
                   </p>
                 </div>
