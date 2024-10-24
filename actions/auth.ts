@@ -13,7 +13,7 @@ import { hashPassword } from '@/server/bcrypt_config';
 import { firestoreAdmin } from '@/server/firebase';
 
 export async function logOut() {
-  await signOut({ redirectTo: '/login' });
+  await signOut({ redirectTo: '/' });
 }
 
 // logins

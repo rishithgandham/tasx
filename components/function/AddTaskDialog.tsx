@@ -24,11 +24,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { ControllerRenderProps, useForm } from 'react-hook-form';
-import { FormClass, formClassResolver } from '@/schema/classSchemas';
-import {  useState } from 'react';
-import { addClass } from '@/actions/classes';
+
 import { useToast } from '../hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
+
 import {
   TaskForm,
   taskFormResolver,
@@ -41,7 +39,7 @@ import { Calendar } from '../ui/calendar';
 import { addTask } from '@/actions/tasks';
 import { ClassType } from '@/schema/classSchemas';
 
-export function AddTaskDialog({
+export function AddTaskDialog({ 
   c,
   open,
   setOpen,

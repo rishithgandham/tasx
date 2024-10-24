@@ -5,37 +5,52 @@ import { redirect } from 'next/navigation';
 import { Card, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import Link from 'next/link';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import LearnMore from '@/components/function/LearnMore';
 
 type Feature = {
   title: string;
   description: string;
+  comingSoon?: boolean;
 };
 
 const features: Feature[] = [
   {
-    title: 'Assignment Tracker 📄',
+    title: 'Track Assignments 📄',
     description:
       'Keep track of all your assignments in one place. tasx will remind you when they are due.',
   },
   {
-    title: 'Project Manager 🧑‍💼',
+    title: 'Manage Classes 📚',
     description:
-      'Manage your projects with ease. tasx helps you break down your project into smaller tasks.',
+      'Add your classes to tasx and keep track of your assignments, projects, and exams.',
   },
   {
-    title: 'Exam Tracker 🅰️',
+    title: 'Search Tasks 🔍',
     description:
-      'Never miss an exam again. tasx will remind you when your exams are coming up.',
-  },
-  {
-    title: 'Manage all of your classes 📚',
-    description:
-      'Add all of your classes to tasx and keep track of all of your assignments, projects, and exams.',
+      'Quickly find specific tasks or classes with tasx powerful search feature.',
   },
   {
     title: 'Theme Switcher 🌗',
     description:
       'Choose between themes that can help you study and stay on our app for long periods of time, tasx will remember your preference.',
+  },
+  {
+    title: 'Manage Projects🧑‍💼',
+    description:
+      'Manage your projects with ease. tasx helps you break down your project into smaller tasks.',
+  },
+  {
+    title: 'Track Exams 🅰️',
+    comingSoon: true,
+    description:
+      'Never miss an exam again. tasx will remind you when your exams are coming up.',
   },
 ];
 
@@ -77,11 +92,14 @@ export default async function Home() {
               <div className="flex flex-col justify-center space-y-4 max-w-3xl">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none ">
-                    An all in One Task Management App for Students
+                    Task Management Built for Students, Designed for Success.
                   </h1>
-                  <p className=" md:text-lg text-muted-foreground ">
-                    tasx helps students manage their assignments, projects, and
-                    exams with ease. Never miss a deadline again!
+                  <p className=" md:text-md text-muted-foreground ">
+                    tasX is your all-in-one task management app designed
+                    specifically for students. It simplifies managing
+                    assignments, projects, and exams, helping you stay organized
+                    and never miss a deadline. With Tasx, you'll stay on top of
+                    your workload and handle school tasks with ease.
                   </p>
                 </div>
                 <div className="flex  gap-3">
@@ -93,16 +111,7 @@ export default async function Home() {
                   >
                     <Button type="submit">Get Started</Button>
                   </form>
-                  <form
-                    action={async () => {
-                      'use server';
-                      redirect('/learnmore');
-                    }}
-                  >
-                    <Button type="submit" variant={'link'}>
-                      Learn More
-                    </Button>
-                  </form>
+                  <LearnMore variant={'link'}/>
                 </div>
               </div>
               <div className="lg:flex lg:justify-end">
@@ -130,7 +139,16 @@ export default async function Home() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
                 {features.map((feature, index) => (
                   <Card key={index} className="border-border p-5">
-                    <CardTitle className="text-lg">{feature.title}</CardTitle>
+                    <CardTitle className="text-lg">
+                      <div className="flex justify-between">
+                        {feature.title}
+                        {feature.comingSoon && (
+                          <span className="text-xs text-primary italic">
+                            Coming Soon
+                          </span>
+                        )}
+                      </div>
+                    </CardTitle>
                     <p className="text-muted-foreground text-sm">
                       {feature.description}
                     </p>
@@ -169,40 +187,6 @@ export default async function Home() {
               </div>
             </div>
             {/* end landing */}
-            <div className="mt-56 grid md:grid-cols-2 grid-cols-1">
-              <div className="flex-col justify-center flex ">
-                <p className="text-5xl font-bold tracking-tighter">tasx:</p>
-                <p className="text-3xl tracking-tighter font-bold mt-2 text-muted-foreground">
-                  A task manager that you can{' '}
-                  <span className="text-primary underline italic">trust</span>{' '}
-                  🤞
-                </p>
-                <p className="text-muted-foreground mt-4">
-                  tasx is built with the latest technologies to ensure that your
-                  data is safe and secure.
-                </p>
-                <div className="flex gap-3">
-                  
-                  <Link href="/register" passHref>
-                    <Button type="submit" variant="default" className="mt-4">
-                      Get started
-                    </Button>
-                  </Link>
-                  <Link href="/contact" passHref>
-                    <Button type="submit" variant="link" className="mt-4">
-                      Contact us
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-              <div className="relative w-full aspect-[16/9] py-10 md:py-0 rounded-xl">
-                <Image
-                  src={classes_screenshot}
-                  alt="tasx app demo"
-                  className=" border-border -z-50 shadow-2xl  border-4 rounded-[var(--radius)]"
-                />
-              </div>
-            </div>
           </div>
         </section>
       </main>

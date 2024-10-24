@@ -32,6 +32,7 @@ import { formatDistance } from 'date-fns';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import DashboardTaskTable from '@/components/function/DashboardTaskTable';
 import { LayoutDashboard } from 'lucide-react';
+import LearnMore from '@/components/function/LearnMore';
 
 export default async function Dashboard() {
   // const session = await auth();
@@ -73,7 +74,7 @@ export default async function Dashboard() {
               </CardHeader>
 
               <CardFooter>
-                <Button>read more</Button>
+                <LearnMore variant={'default'} />
               </CardFooter>
             </Card>
             <Card>

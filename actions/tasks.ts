@@ -37,7 +37,7 @@ export async function getTasks(classId: string): Promise<{
 
       return parsed;
     });
-    console.log(tasksData);
+    // console.log(tasksData);
     return { data: tasksData };
   } catch (e) {
     console.log(e)

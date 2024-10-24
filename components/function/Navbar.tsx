@@ -39,13 +39,12 @@ import { UserProfile } from './UserDropdown';
 import Search from './Search';
 
 const navLinks: NavLink[] = [
-  { name: 'Classes', href: '/app/classes', icon: <Book size={18} /> },
   {
     name: 'Dashboard',
     href: '/app',
     icon: <LucideLayoutDashboard size={18} />,
   },
-  { name: 'Tasks', href: '/app/tasks', icon: <Badge>5</Badge> },
+  { name: 'Classes', href: '/app/classes', icon: <Book size={18} /> },
 ];
 
 interface NavLink {
@@ -67,9 +66,9 @@ export default async function Navbar() {
       <div className="container flex justify-between">
         <ul className="md:flex hidden justify-center items-center space-x-3 ">
           {' '}
-          <Link href="/app" legacyBehavior passHref>
+          <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className="text-xl text-primary font-bold tracking-tight">
-              tasx
+              tasX
             </NavigationMenuLink>
           </Link>
           {navLinks.map((link, i) => (
@@ -83,7 +82,7 @@ export default async function Navbar() {
 
         <div className=" flex md:max-w-min w-full justify-normal  items-center space-x-2">
           <Sidebar user={session.user} />
-          <Search/>
+          <Search />
 
           <UserProfile user={session?.user} />
           <div className="hidden md:flex justify-between space-x-0">
@@ -113,7 +112,7 @@ export default async function Navbar() {
           <div className="flex h-full items-center">
             <Link href="/" legacyBehavior passHref>
               <NavigationMenuLink className="text-xl text-primary font-bold tracking-tighter">
-                tasx
+                tasX
               </NavigationMenuLink>
             </Link>
           </div>
@@ -123,6 +122,7 @@ export default async function Navbar() {
                 Log in
               </Button>
             </Link>
+
             <Link href="/register" passHref>
               <Button
                 variant={'default'}
@@ -130,6 +130,12 @@ export default async function Navbar() {
                 className="font-semibold  text-xs"
               >
                 Get started
+              </Button>
+            </Link>
+            <Link href="https://github.com/rishithgandham/tasx" passHref>
+              <Button variant="ghost" size="sm" className="hidden md:flex">
+                <FaGithub className="h-3 w-3" />
+                <span className="sr-only">Github</span>
               </Button>
             </Link>
             <ModeToggle />
@@ -174,16 +180,15 @@ function Sidebar({ user }: { user: User }) {
         className="flex justify-between flex-col w-72 border-border backdrop-blur"
       >
         <nav className="flex-1 space-y-1 text-lg font-medium">
-          <Link href="/app" legacyBehavior passHref>
+          <Link href="/" legacyBehavior passHref>
             <NavigationMenuLink className="pl-3 text-2xl font-bold tracking-tight">
-              tasx
+              tasX
             </NavigationMenuLink>
           </Link>
           {navLinks.map((link, i) => (
             <Link
               href={link.href}
               key={link.href}
-              
               className="w-full px-3 py-2 flex justify-between rounded-sm hover:bg-muted text-muted-foreground hover:text-foreground"
             >
               <NavigationMenuLink className="text-sm ">

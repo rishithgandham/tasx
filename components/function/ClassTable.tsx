@@ -38,9 +38,11 @@ import { cn } from '@/lib/utils';
 export default function ClassTable({
   c,
   tasks,
+  searchId,
 }: {
   c: ClassType;
   tasks: TaskType[];
+  searchId?: string;
 }) {
   const [addTaskDialogOpen, setAddTaskDialogOpen] = useState(false);
   const [openEditTaskDialog, setOpenEditTaskDialog] = useState(false);
@@ -86,13 +88,12 @@ export default function ClassTable({
   return (
     <>
       <Table>
-        <TableCaption>A list of your tasks.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className=" text-left">Task Name</TableHead>
             <TableHead>Description</TableHead>
             <TableHead>Date Due</TableHead>
-            <TableHead>Amount</TableHead>
+            <TableHead>Status</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -101,7 +102,7 @@ export default function ClassTable({
             .sort((t, b) => compareAsc(t.dueDate, b.dueDate))
             .map(t => (
               <>
-                <TableRow key={t.id}>
+                <TableRow key={t.id} className={t.id == searchId ? 'bg-red-200' : ""}>
                   <TableCell>{t.name}</TableCell>
                   <TableCell>
                     <HoverCard>
@@ -140,22 +141,25 @@ export default function ClassTable({
                         <Badge
                           variant={t.completed ? 'default' : 'destructive'}
                         >
-                          {t.completed ? 'complete' : 'incomplete'}
+                          {t.completed ? 'Complete' : 'Incomplete'}
                         </Badge>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem
-                          onClick={() => setComplete(t)}
-                          className=" hover:cursor-pointer text-muted-foreground hover:text-primary"
-                        >
-                          <Badge variant={'default'}>complete</Badge>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => setIncomplete(t)}
-                          className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary"
-                        >
-                          <Badge variant={'destructive'}>incomplete</Badge>
-                        </DropdownMenuItem>
+                        {t.completed ? (
+                          <DropdownMenuItem
+                            onClick={() => setIncomplete(t)}
+                            className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary"
+                          >
+                            <Badge variant={'destructive'}>Mark Incomplete</Badge>
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem
+                            onClick={() => setComplete(t)}
+                            className=" hover:cursor-pointer text-muted-foreground hover:text-primary"
+                          >
+                            <Badge variant={'default'}>Mark Complete</Badge>
+                          </DropdownMenuItem>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

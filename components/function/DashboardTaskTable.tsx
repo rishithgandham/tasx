@@ -137,22 +137,27 @@ export default function DashboardTasksTable({ tasks }: { tasks: TaskType[] }) {
                         <Badge
                           variant={t.completed ? 'default' : 'destructive'}
                         >
-                          {t.completed ? 'complete' : 'incomplete'}
+                          {t.completed ? 'Complete' : 'Incomplete'}
                         </Badge>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem
-                          onClick={() => setComplete(t)}
-                          className=" hover:cursor-pointer text-muted-foreground hover:text-primary"
-                        >
-                          <Badge variant={'default'}>complete</Badge>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => setIncomplete(t)}
-                          className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary"
-                        >
-                          <Badge variant={'destructive'}>incomplete</Badge>
-                        </DropdownMenuItem>
+                        {t.completed ? (
+                          <DropdownMenuItem
+                            onClick={() => setIncomplete(t)}
+                            className="flex items-center justify-between hover:cursor-pointer text-muted-foreground hover:text-primary"
+                          >
+                            <Badge variant={'destructive'}>
+                              Mark Incomplete
+                            </Badge>
+                          </DropdownMenuItem>
+                        ) : (
+                          <DropdownMenuItem
+                            onClick={() => setComplete(t)}
+                            className=" hover:cursor-pointer text-muted-foreground hover:text-primary"
+                          >
+                            <Badge variant={'default'}>Mark Complete</Badge>
+                          </DropdownMenuItem>
+                        )}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

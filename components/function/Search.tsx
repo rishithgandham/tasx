@@ -56,7 +56,7 @@ export default function Search() {
                 <button
                   onClick={() => {
                     setTerm(undefined);
-                    push(`/app/classes/${task.class_id}`);
+                    push(`/app/classes/${task.class_id}?id=${task.id}`);
                   }}
                   key={task.id}
                   className=" w-full overflow-scroll  text-left"
